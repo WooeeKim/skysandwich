@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Sky Sandwich</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #BAE6FD;
+            --spring: cubic-bezier(0.34, 1.7, 0.4, 1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        #app {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            margin: 0 auto;
+        }
+
+        /* ----------------------------------
+           1. 무한 구름 띠 (화면 폭 전체)
+        ---------------------------------- */
+        .marquee-track {
+            position: fixed;
+            left: 0;
+            width: 100vw;
+            height: 65px;
+            background-color: var(--sky-blue);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
+            opacity: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition:
+                top 0.7s var(--spring),
+                bottom 0.7s var(--spring),
+                height 0.45s ease,
+                opacity 0.5s ease;
+        }
+
+        .marquee-group {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            animation: scroll-cloud 25s linear infinite;
+        }
+
+        .marquee-group span {
+            font-size: clamp(24px, 3.4vw, 32px);
+            letter-spacing: 4px;
+            margin-right: -4px; /* trailing letter-spacing 상쇄: 그룹 경계 간격 통일 */
+            padding: 0;
+            transition: font-size 0.45s ease;
+        }
+
+        @keyframes scroll-cloud {
+            0%   { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); } /* 한 그룹 폭만큼 이동 → 다음 그룹이 자리 채움 */
+        }
+
+        /* 초기 위치 (숨김) */
+        .cloud-top    { top: -100px; }
+        .cloud-bottom { bottom: -100px; }
+
+
+        /* ----------------------------------
+           2. 캐릭터 (정중앙 고정)
+        ---------------------------------- */
+        .character {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: clamp(60px, 9vw, 75px);
+            background: transparent;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            z-index: 10;
+            line-height: 1;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.7s var(--spring);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .character:focus-visible { outline: 2px solid #0ea5e9; outline-offset: 6px; border-radius: 8px; }
+        .character:hover  { transform: translate(-50%, -50%) scale(1.15) rotate(5deg); }
+        .character:active { transform: translate(-50%, -50%) scale(0.85) rotate(-5deg); }
+
+
+        /* ----------------------------------
+           3. 타이틀 & 전시 정보
+        ---------------------------------- */
+        .project-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(20px, 3.6vw, 34px);
+            color: #000;
+            position: absolute;
+            top: 15%;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.7s var(--spring);
+            text-align: center;
+        }
+
+        .info-section {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s var(--spring);
+            pointer-events: none;
+        }
+
+        .info-block {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .info-block strong {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            display: block;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+
+        /* ----------------------------------
+           단계별 상태 (Step 1 ~ 5)
+        ---------------------------------- */
+
+        /* [2] 아래 구름 띠 등장 */
+        [data-step="2"] .cloud-bottom { bottom: 0; opacity: 1; }
+
+        /* [3] 위아래 구름이 가운데로 모임 */
+        [data-step="3"] .cloud-bottom { bottom: calc(50% - 100px); opacity: 1; }
+        [data-step="3"] .cloud-top    { top:    calc(50% - 100px); opacity: 1; }
+
+        /* [4] 압착 */
+        [data-step="4"] .cloud-bottom { bottom: calc(50% - 75px); opacity: 1; }
+        [data-step="4"] .cloud-top    { top:    calc(50% - 75px); opacity: 1; }
+        [data-step="4"] .character    { transform: translate(-50%, -50%) scale(0.92); }
+
+        /* [5] 샌드위치 완성 */
+        [data-step="5"] .cloud-top    { top: 0;    opacity: 1; height: 40px; }
+        [data-step="5"] .cloud-bottom { bottom: 0; opacity: 1; height: 40px; }
+        [data-step="5"] .marquee-group span { font-size: clamp(18px, 2.4vw, 22px); }
+        [data-step="5"] .character    { transform: translate(-50%, calc(-50% - 40px)) scale(1.1); }
+        [data-step="5"] .character:hover  { transform: translate(-50%, calc(-50% - 40px)) scale(1.22) rotate(5deg); }
+        [data-step="5"] .character:active { transform: translate(-50%, calc(-50% - 40px)) scale(0.98) rotate(-5deg); }
+        [data-step="5"] .project-title { opacity: 1; transform: translateY(0); }
+        [data-step="5"] .info-section  { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-group { animation: none; }
+            * { transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body data-step="1">
+
+    <div class="marquee-track cloud-top" aria-hidden="true">
+        <div class="marquee-group">
+            <span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span>
+        </div>
+        <div class="marquee-group">
+            <span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span>
+        </div>
+    </div>
+
+    <div id="app">
+        <div class="project-title">Become a Sky Sandwich</div>
+
+        <button type="button" class="character" aria-label="다음 단계로 진행">🙋‍♀️</button>
+
+        <div class="info-section">
+            <div class="info-block">
+                <strong>Location</strong>
+                Behind N25
+            </div>
+            <div class="info-block">
+                <strong>How to View</strong>
+                Look.<br>Become a sandwich.
+            </div>
+        </div>
+    </div>
+
+    <div class="marquee-track cloud-bottom" aria-hidden="true">
+        <div class="marquee-group">
+            <span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span>
+        </div>
+        <div class="marquee-group">
+            <span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span>
+        </div>
+    </div>
+
+    <script>
+        const FACES = ["🙋‍♀️", "👇", "👀", "😮", "🥪"];
+        const TOTAL = FACES.length;
+        const char = document.querySelector('.character');
+        let step = 1;
+
+        function progress() {
+            step = step >= TOTAL ? 1 : step + 1;
+            char.innerText = FACES[step - 1];
+            document.body.setAttribute('data-step', step);
+        }
+
+        char.addEventListener('click', progress);
+        char.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); progress(); }
+        });
+    </script>
+
+</body>
+</html>
