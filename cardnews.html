@@ -150,16 +150,31 @@
   .steps .em{font-size:38px;line-height:1;}
   .steps .arr{color:var(--sky-deep);font-size:18px;font-weight:900;}
 
-  /* ── 재료 리스트 ── */
-  .mat{
-    list-style:none;padding:0;margin:18px 0 0;
-    display:flex;flex-direction:column;gap:13px;text-align:left;
+  /* ── 사진 슬롯 (실제 사진으로 교체) ── */
+  .photo-slot{
+    width:100%;max-width:320px;aspect-ratio:4/3;
+    border:2px dashed var(--sky-deep);border-radius:6px;
+    background:
+      repeating-linear-gradient(45deg, #f0f9ff 0 12px, #e0f2fe 12px 24px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;color:#0891b2;margin-bottom:18px;overflow:hidden;
   }
-  .mat li{
-    font-size:15px;color:var(--ink);font-weight:500;
-    display:flex;align-items:center;gap:12px;
+  .photo-slot .ic{font-size:38px;line-height:1;}
+  .photo-slot .lbl{font-family:'Press Start 2P',cursive;font-size:9px;letter-spacing:1px;}
+  .photo-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  /* ── 폰 목업 (사이트 소개) ── */
+  .phone{
+    width:150px;height:300px;border:6px solid var(--ink);border-radius:24px;
+    background:#fff;overflow:hidden;position:relative;margin-bottom:22px;
+    box-shadow:0 12px 28px rgba(15,23,42,.18);
   }
-  .mat li b{font-size:22px;line-height:1;}
+  .phone .pband{position:absolute;left:0;width:100%;height:30px;background:var(--sky);
+    display:flex;align-items:center;font-size:15px;overflow:hidden;white-space:nowrap;line-height:1;}
+  .phone .pband.t{top:0;} .phone .pband.b{bottom:0;}
+  .phone .pme{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:46px;line-height:1;}
+  .phone .ptitle{position:absolute;top:34px;left:0;width:100%;text-align:center;
+    font-family:'Press Start 2P',cursive;font-size:7px;line-height:1.6;color:var(--ink);}
 
   /* 강조 카드(스카이) */
   .sky-card{background:var(--sky);}
@@ -175,12 +190,12 @@
   .credit{
     font-family:'Press Start 2P',cursive;
     font-size:11px;line-height:1.8;color:#fff;
-    margin-top:26px;
+    margin-top:24px;
   }
   .link-pill{
-    margin-top:22px;display:inline-block;
-    font-family:'Press Start 2P',cursive;font-size:10px;
-    background:var(--sky);color:var(--ink);padding:11px 16px;border-radius:4px;
+    margin-top:20px;display:inline-block;
+    font-family:'Press Start 2P',cursive;font-size:11px;
+    background:var(--sky);color:var(--ink);padding:13px 18px;border-radius:4px;
     text-decoration:none;letter-spacing:1px;
   }
 
@@ -236,24 +251,13 @@
       <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="tag">THE IDEA</div>
       <div class="emoji-l">🪞</div>
-      <p class="lead" style="margin-top:14px;">그래서 하늘을<br><span class="hi">바닥에 비췄다.</span></p>
-      <p class="body">거울 타일을 붙여, 고개를 숙여도 하늘이 보이게 했다.</p>
+      <p class="lead" style="margin-top:14px;">거울로 하늘을<br><span class="hi">바닥에 비췄다.</span></p>
+      <p class="body">N25 뒤편, 잘 쓰이지 않던 자리에 접착식 거울 타일을. 고개를 숙여도 하늘이 보이게.</p>
       <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="num">04</div>
     </section>
 
-    <!-- 05 · 장소 -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">THE PLACE</div>
-      <div class="emoji-l">📍</div>
-      <p class="lead sm" style="margin-top:14px;">N25 뒤편,<br><span class="hi">아무도 멈추지 않던 자리.</span></p>
-      <p class="body">잘 쓰이지 않던 빈 공간. 다들 그냥 지나치기만 하던 곳을 골랐다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">05</div>
-    </section>
-
-    <!-- 06 · 샌드위치 개념 -->
+    <!-- 05 · 샌드위치 개념 -->
     <section class="card">
       <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="tag">THE MOMENT</div>
@@ -264,14 +268,44 @@
       </div>
       <p class="lead">위에는 진짜 하늘,<br>아래엔 비친 하늘.<br><span class="hi">그 사이의 사람은 샌드위치.</span></p>
       <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">05</div>
+    </section>
+
+    <!-- 06 · 사진 슬롯 (실제 설치/반사 사진으로 교체) -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">ON SITE</div>
+      <!-- 사진 넣을 때: 아래 .photo-slot 안의 안내 div를 지우고 <img src="설치사진.jpg"> 한 줄로 교체 -->
+      <div class="photo-slot">
+        <span class="ic">📷</span>
+        <span class="lbl">PHOTO HERE</span>
+      </div>
+      <p class="lead sm">거울 속엔 하늘과<br><span class="hi">내가 함께 비쳤다.</span></p>
+      <p class="body">노을과 흐린 날, 반사된 하늘 앞에서 사람들이 걸음을 늦췄다.</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="num">06</div>
     </section>
 
-    <!-- 07 · 변신 진행 -->
+    <!-- 07 · 사이트 소개 (폰 목업) -->
+    <section class="card sky-card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag" style="color:#0369a1;">NOW ONLINE</div>
+      <div class="phone">
+        <div class="pband t">☁️☁️☁️☁️☁️☁️☁️☁️</div>
+        <div class="ptitle">BECOME<br>A SKY<br>SANDWICH</div>
+        <div class="pme">🥪</div>
+        <div class="pband b">☁️☁️☁️☁️☁️☁️☁️☁️</div>
+      </div>
+      <p class="lead sm">이젠 웹에서도<br><span style="background:linear-gradient(transparent 58%,#fff 58%);padding:0 2px;">직접 샌드위치가 된다.</span></p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">07</div>
+    </section>
+
+    <!-- 08 · 인터랙션 -->
     <section class="card">
       <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">HOW TO BECOME</div>
-      <p class="lead" style="margin-bottom:26px;">샌드위치가 되는 법</p>
+      <div class="tag">TAP TO BECOME</div>
+      <p class="lead" style="margin-bottom:26px;">누를 때마다<br>한 단계씩.</p>
       <div class="steps">
         <span class="em">🙋‍♀️</span><span class="arr">→</span>
         <span class="em">👇</span><span class="arr">→</span>
@@ -279,100 +313,21 @@
         <span class="em">😮</span><span class="arr">→</span>
         <span class="em">🥪</span>
       </div>
-      <p class="body">멈춰서기 · 내려다보기 · 발견하기 · 놀라기 · 샌드위치 되기.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">07</div>
-    </section>
-
-    <!-- 08 · 작게, 우연히 -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">QUIET ON PURPOSE</div>
-      <div class="emoji-l">🤫</div>
-      <p class="lead" style="margin-top:14px;">설명하지 않기로 했다.</p>
-      <p class="body">QR도, "인스타에 올려주세요"도 붙이지 않았다. 큰 구경거리 대신, 지나가다 우연히 마주치고 스스로 발견하는 작은 장치이고 싶었다.</p>
+      <p class="body">멈춰서기 · 내려다보기 · 발견하기 · 놀라기 · 샌드위치 되기. 구름이 위아래로 모여 당신을 끼운다.</p>
       <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="num">08</div>
     </section>
 
-    <!-- 09 · 피드백 -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">A SMALL CHANGE</div>
-      <div class="emoji-l">🪑</div>
-      <p class="lead sm" style="margin-top:14px;">타일 사이를 <span class="hi">비워 뒀다.</span></p>
-      <p class="body">처음엔 거울을 빈틈없이 깔 생각이었다. 피드백을 받고, 사이를 띄워 앉아 쉴 자리를 남겼다. 작품이 아니라 풍경의 일부처럼.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">09</div>
-    </section>
-
-    <!-- 10 · Before -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">BEFORE</div>
-      <div class="emoji-l">🚶</div>
-      <p class="lead" style="margin-top:14px;">아무도<br><span class="hi">멈추지 않던 길.</span></p>
-      <p class="body">대부분 그냥 지나쳤다. 멈추거나 앉거나 둘러볼 이유가 없던 자리.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">10</div>
-    </section>
-
-    <!-- 11 · During -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">DURING</div>
-      <div class="emoji-l">🗣️</div>
-      <p class="lead" style="margin-top:14px;">설치 중에도<br><span class="hi">사람들이 다가왔다.</span></p>
-      <p class="body">작업이 끝나기도 전에 궁금해하며 질문을 건넸다. 예상 못 한 대화가 먼저 생겼다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">11</div>
-    </section>
-
-    <!-- 12 · After -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">AFTER</div>
-      <div class="emoji-l">🌇</div>
-      <p class="lead sm" style="margin-top:14px;">사람들이<br><span class="hi">속도를 늦췄다.</span></p>
-      <p class="body">햇빛을 반사하는 거울 앞에서. 노을과 흐린 날엔 더더욱. 반사된 하늘은 생각보다 사람을 오래 붙잡았다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">12</div>
-    </section>
-
-    <!-- 13 · 발견 -->
-    <section class="card sky-card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <p class="quote"><span class="mark">★</span>거울 속엔<br>하늘과 내가<br>함께 비쳤다.</p>
-      <p class="body" style="color:#1e3a4f;">하늘을 보여주려 했는데, 사람들은 하늘과 자기 자신을 동시에 봤다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">13</div>
-    </section>
-
-    <!-- 14 · 재료 -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">MATERIALS</div>
-      <p class="lead sm" style="margin-bottom:4px;">작고, 저렴하고,<br>눈에 잘 안 띄게.</p>
-      <ul class="mat">
-        <li><b>🪞</b> 접착식 거울 타일</li>
-        <li><b>🏷️</b> 라벨지</li>
-        <li><b>🧻</b> 청소용 천</li>
-        <li><b>📱</b> 기록용 스마트폰 카메라</li>
-      </ul>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num">14</div>
-    </section>
-
-    <!-- 15 · 마감 -->
+    <!-- 09 · 마감 -->
     <section class="card footer-card">
       <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
       <div class="emoji-xl">🥪</div>
       <p class="lead">Look.<br><span style="background:linear-gradient(transparent 58%,var(--sky-deep) 58%);padding:0 2px;">Become a sandwich.</span></p>
-      <p class="body">📍 Behind N25</p>
-      <div class="credit">Naeun Kim<br>2026</div>
-      <a class="link-pill" href="https://wooeekim.github.io/skysandwich/">VIEW ONLINE ☁️</a>
+      <p class="body">프로필 링크에서 직접 해보세요 ☁️</p>
+      <a class="link-pill" href="https://wooeekim.github.io/skysandwich/">VIEW ONLINE →</a>
+      <div class="credit">Naeun Kim · 2026</div>
       <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num" style="color:var(--ink);">15</div>
+      <div class="num" style="color:var(--ink);">09</div>
     </section>
 
   </div>
