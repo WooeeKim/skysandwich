@@ -9,9 +9,10 @@
   :root{
     --sky:#BAE6FD;
     --sky-deep:#7DD3FC;
+    --sky-ink:#0369a1;
     --ink:#0b1220;
     --gray:#475569;
-    --spring:cubic-bezier(0.34,1.7,0.4,1);
+    --line:#cbd5e1;
   }
   *{box-sizing:border-box;}
   body{
@@ -22,6 +23,9 @@
     -webkit-font-smoothing:antialiased;
     padding:40px 0 80px;
   }
+  /* 한글 줄바꿈: 단어 중간에서 끊기지 않게 */
+  .ko{word-break:keep-all; line-break:strict;}
+
   .hint{
     text-align:center;
     font-size:13px;
@@ -30,19 +34,14 @@
     font-family:'Press Start 2P',cursive;
     letter-spacing:1px;
   }
-  .deck{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:34px;
-  }
+  .deck{display:flex; flex-direction:column; align-items:center; gap:34px;}
 
   /* ── 슬라이드: 인스타 세로 4:5 (1080×1350) ── */
   .card{
     position:relative;
     width:432px;          /* 1080 * 0.4 */
     height:540px;         /* 1350 * 0.4 */
-    background:#ffffff;
+    background:#fff;
     overflow:hidden;
     border-radius:6px;
     box-shadow:0 18px 50px rgba(15,23,42,.16);
@@ -51,11 +50,11 @@
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:0 38px;
+    padding:64px 40px;    /* 위아래 구름 띠(46px) 침범 방지 */
     user-select:none;
   }
 
-  /* 구름 띠 */
+  /* 구름 띠 (사이트 시그니처) */
   .cloud-band{
     position:absolute;
     left:0;
@@ -69,33 +68,25 @@
     font-size:24px;
     letter-spacing:2px;
     line-height:1;
+    z-index:3;
   }
   .cloud-band.top{top:0;}
   .cloud-band.bottom{bottom:0;}
-  .cloud-band span{padding:0 2px;}
 
-  .pixel{font-family:'Press Start 2P',cursive;}
-  .num{
-    position:absolute;
-    bottom:14px;
-    right:18px;
-    font-family:'Press Start 2P',cursive;
-    font-size:9px;
-    color:var(--sky-deep);
-    z-index:5;
-  }
+  /* ── 공통 타이포 리듬 ── */
   .tag{
     font-family:'Press Start 2P',cursive;
     font-size:10px;
     letter-spacing:1px;
-    color:var(--sky-deep);
-    margin-bottom:18px;
+    color:var(--sky-ink);
+    margin:0 0 22px;
   }
   .lead{
     font-size:23px;
     font-weight:900;
     line-height:1.5;
-    letter-spacing:-.3px;
+    letter-spacing:-.4px;
+    margin:0;
   }
   .lead.sm{font-size:20px;}
   .lead .hi{
@@ -107,103 +98,108 @@
     font-weight:400;
     line-height:1.75;
     color:var(--gray);
-    margin-top:18px;
-    max-width:330px;
+    margin:16px 0 0;
+    max-width:320px;
   }
   .quote{
-    font-size:25px;font-weight:900;line-height:1.55;letter-spacing:-.3px;
+    font-size:25px; font-weight:900; line-height:1.55; letter-spacing:-.4px; margin:0;
   }
-  .quote .mark{font-family:'Press Start 2P',cursive;color:var(--sky-deep);font-size:30px;display:block;margin-bottom:14px;}
-  .emoji-xl{font-size:96px;line-height:1;margin:6px 0;}
-  .emoji-l{font-size:62px;line-height:1;}
+  .quote .mark{
+    font-family:'Press Start 2P',cursive; color:var(--sky-deep);
+    font-size:28px; display:block; margin:0 0 16px;
+  }
 
-  /* ── 1. 표지 ── */
+  /* 페이지 번호 (배경별 일관 대비) */
+  .num{
+    position:absolute; bottom:14px; right:18px;
+    font-family:'Press Start 2P',cursive; font-size:9px;
+    color:var(--line); z-index:4;
+  }
+  .sky-card .num{color:#7dd3fc;}
+  .photo-card .num{color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.3);}
+  .footer-card .num{color:#334155;}
+
+  /* ── 표지 ── */
   .cover .title{
     font-family:'Press Start 2P',cursive;
-    font-size:23px;
-    line-height:1.5;
-    color:var(--ink);
-    margin:0;
+    font-size:23px; line-height:1.55; color:var(--ink); margin:0;
   }
-  .cover .sub{
-    margin-top:22px;
-    font-size:14px;
-    color:var(--gray);
-    letter-spacing:1px;
-  }
-  .sandwich-stack{
-    display:flex;flex-direction:column;align-items:center;
-    margin-bottom:26px;
-  }
+  .cover .sub{margin:22px 0 0; font-size:14px; color:var(--gray); letter-spacing:.5px;}
+  .sandwich-stack{display:flex; flex-direction:column; align-items:center; margin:0 0 26px;}
   .sandwich-stack .band-mini{
-    width:200px;height:30px;background:var(--sky);
-    display:flex;align-items:center;justify-content:center;
-    font-size:17px;overflow:hidden;border-radius:3px;
+    width:200px; height:30px; background:var(--sky);
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; overflow:hidden; border-radius:3px;
   }
-  .sandwich-stack .me{font-size:58px;margin:-2px 0;z-index:2;line-height:1;}
+  .sandwich-stack .me{font-size:58px; margin:-2px 0; z-index:2; line-height:1;}
+  .sandwich-stack.concept .band-mini{
+    width:188px; font-family:'Press Start 2P',cursive; font-size:9px; color:var(--sky-ink);
+  }
 
-  /* ── 진행 스텝 ── */
-  .steps{
-    display:flex;align-items:center;justify-content:center;
-    gap:8px;flex-wrap:wrap;margin-top:10px;
-  }
-  .steps .em{font-size:38px;line-height:1;}
-  .steps .arr{color:var(--sky-deep);font-size:18px;font-weight:900;}
-
-  /* ── 사진 슬롯 (실제 사진으로 교체) ── */
-  .photo-slot{
-    width:100%;max-width:320px;aspect-ratio:4/3;
-    border:2px dashed var(--sky-deep);border-radius:6px;
-    background:
-      repeating-linear-gradient(45deg, #f0f9ff 0 12px, #e0f2fe 12px 24px);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:8px;color:#0891b2;margin-bottom:18px;overflow:hidden;
-  }
-  .photo-slot .ic{font-size:38px;line-height:1;}
-  .photo-slot .lbl{font-family:'Press Start 2P',cursive;font-size:9px;letter-spacing:1px;}
-  .photo-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+  /* ── 진행 스텝 (작품의 실제 인터랙션) ── */
+  .steps{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; margin:0 0 4px;}
+  .steps .em{font-size:36px; line-height:1;}
+  .steps .arr{color:var(--sky-deep); font-size:17px; font-weight:900;}
 
   /* ── 폰 목업 (사이트 소개) ── */
   .phone{
-    width:150px;height:300px;border:6px solid var(--ink);border-radius:24px;
-    background:#fff;overflow:hidden;position:relative;margin-bottom:22px;
+    width:148px; height:296px; border:6px solid var(--ink); border-radius:24px;
+    background:#fff; overflow:hidden; position:relative; margin:0 0 24px;
     box-shadow:0 12px 28px rgba(15,23,42,.18);
   }
-  .phone .pband{position:absolute;left:0;width:100%;height:30px;background:var(--sky);
-    display:flex;align-items:center;font-size:15px;overflow:hidden;white-space:nowrap;line-height:1;}
+  .phone .pband{
+    position:absolute; left:0; width:100%; height:28px; background:var(--sky);
+    display:flex; align-items:center; font-size:14px; overflow:hidden; white-space:nowrap; line-height:1;
+  }
   .phone .pband.t{top:0;} .phone .pband.b{bottom:0;}
-  .phone .pme{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:46px;line-height:1;}
-  .phone .ptitle{position:absolute;top:34px;left:0;width:100%;text-align:center;
-    font-family:'Press Start 2P',cursive;font-size:7px;line-height:1.6;color:var(--ink);}
+  .phone .pme{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:44px; line-height:1;}
+  .phone .ptitle{
+    position:absolute; top:38px; left:0; width:100%; text-align:center;
+    font-family:'Press Start 2P',cursive; font-size:7px; line-height:1.7; color:var(--ink);
+  }
 
-  /* 강조 카드(스카이) */
+  /* ── 풀블리드 사진 슬라이드 ── */
+  .photo-card{padding:0;}
+  .photo-fill{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;}
+  .photo-ph{   /* 사진 넣기 전 자리표시 */
+    position:absolute; inset:0; z-index:1;
+    background:repeating-linear-gradient(45deg,#f0f9ff 0 14px,#e0f2fe 14px 28px);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:#0891b2;
+  }
+  .photo-ph .lbl{font-family:'Press Start 2P',cursive; font-size:9px; letter-spacing:1px;}
+  .photo-cap{
+    position:absolute; left:0; right:0; bottom:46px; z-index:2;
+    background:rgba(255,255,255,.94); padding:16px 26px;
+    font-size:18px; font-weight:900; line-height:1.5; letter-spacing:-.4px; text-align:center;
+  }
+  .photo-cap .hi{background:linear-gradient(transparent 58%, var(--sky) 58%); padding:0 2px;}
+
+  /* ── 강조(스카이) 카드 ── */
   .sky-card{background:var(--sky);}
-  .sky-card .lead,.sky-card .quote{color:var(--ink);}
+  .sky-card .quote{color:var(--ink);}
+  .sky-card .lead{color:var(--ink);}
   .sky-card .body{color:#1e3a4f;}
   .sky-card .cloud-band{background:#fff;}
-  .sky-card .num{color:#fff;}
+  .sky-card .tag{color:var(--sky-ink);}
 
+  /* ── 마감 카드 ── */
   .footer-card{background:var(--ink);}
   .footer-card .lead{color:#fff;}
   .footer-card .body{color:var(--sky);}
   .footer-card .cloud-band{background:var(--sky);}
-  .credit{
-    font-family:'Press Start 2P',cursive;
-    font-size:11px;line-height:1.8;color:#fff;
-    margin-top:24px;
-  }
+  .credit{font-family:'Press Start 2P',cursive; font-size:10px; line-height:1.8; color:#64748b; margin:24px 0 0;}
   .link-pill{
-    margin-top:20px;display:inline-block;
-    font-family:'Press Start 2P',cursive;font-size:11px;
-    background:var(--sky);color:var(--ink);padding:13px 18px;border-radius:4px;
-    text-decoration:none;letter-spacing:1px;
+    margin:22px 0 0; display:inline-block;
+    font-family:'Press Start 2P',cursive; font-size:11px;
+    background:var(--sky); color:var(--ink); padding:13px 18px; border-radius:4px;
+    text-decoration:none; letter-spacing:1px;
   }
 
   @media print{
-    body{background:#fff;padding:0;}
+    body{background:#fff; padding:0;}
     .hint{display:none;}
     .deck{gap:0;}
-    .card{box-shadow:none;border-radius:0;page-break-after:always;}
+    .card{box-shadow:none; border-radius:0; page-break-after:always;}
   }
 </style>
 </head>
@@ -215,97 +211,94 @@
 
     <!-- 01 · 표지 -->
     <section class="card cover">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="sandwich-stack">
         <div class="band-mini">☁️☁️☁️☁️☁️☁️</div>
         <div class="me">🙋‍♀️</div>
         <div class="band-mini">☁️☁️☁️☁️☁️☁️</div>
       </div>
       <h1 class="title">Become<br>a Sky<br>Sandwich</h1>
-      <p class="sub">하늘과 하늘 사이에 끼이는 법</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="sub ko">하늘과 하늘 사이에 끼이는 법</p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">01</div>
     </section>
 
-    <!-- 02 · 관찰 -->
+    <!-- 02 · 관찰 (타입 중심) -->
     <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="tag">OBSERVATION</div>
-      <div class="emoji-xl">☁️</div>
-      <p class="lead">하늘은 늘 위에 있지만<br><span class="hi">아무도 올려다보지 않는다.</span></p>
-      <p class="body">바쁘게 지나치는 길 위에서, 우리는 머리 위의 하늘을 거의 잊고 산다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="lead ko">하늘은 늘 위에 있지만<br><span class="hi">아무도 올려다보지 않는다.</span></p>
+      <p class="body ko">바쁘게 지나치는 길 위에서, 우리는 머리 위의 하늘을 거의 잊고 산다.</p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">02</div>
     </section>
 
-    <!-- 03 · 질문 (여백) -->
+    <!-- 03 · 질문 (여백 카드) -->
     <section class="card sky-card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <p class="quote"><span class="mark">?</span>고개를 숙인 채로도<br>하늘을 볼 수 있을까?</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
+      <p class="quote ko"><span class="mark">?</span>고개를 숙인 채로도<br>하늘을 볼 수 있을까?</p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">03</div>
     </section>
 
-    <!-- 04 · 아이디어 -->
+    <!-- 04 · 아이디어 (타입 중심) -->
     <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="tag">THE IDEA</div>
-      <div class="emoji-l">🪞</div>
-      <p class="lead" style="margin-top:14px;">거울로 하늘을<br><span class="hi">바닥에 비췄다.</span></p>
-      <p class="body">N25 뒤편, 잘 쓰이지 않던 자리에 접착식 거울 타일을. 고개를 숙여도 하늘이 보이게.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="lead ko">거울로 하늘을<br><span class="hi">바닥에 비췄다.</span></p>
+      <p class="body ko">N25 뒤편, 잘 쓰이지 않던 자리에 접착식 거울 타일을 붙였다. 고개를 숙여도 하늘이 보이도록.</p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">04</div>
     </section>
 
-    <!-- 05 · 샌드위치 개념 -->
+    <!-- 05 · 샌드위치 개념 (다이어그램) -->
     <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="tag">THE MOMENT</div>
-      <div class="sandwich-stack" style="margin:8px 0 22px;">
-        <div class="band-mini" style="width:170px;">☁️ 진짜 하늘 ☁️</div>
+      <div class="sandwich-stack concept">
+        <div class="band-mini">SKY</div>
         <div class="me">🧍</div>
-        <div class="band-mini" style="width:170px;">🪞 비친 하늘 🪞</div>
+        <div class="band-mini">REFLECTED SKY</div>
       </div>
-      <p class="lead">위에는 진짜 하늘,<br>아래엔 비친 하늘.<br><span class="hi">그 사이의 사람은 샌드위치.</span></p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="lead ko">위에는 진짜 하늘, 아래엔 비친 하늘.<br><span class="hi">그 사이의 사람은 샌드위치.</span></p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">05</div>
     </section>
 
-    <!-- 06 · 사진 슬롯 (실제 설치/반사 사진으로 교체) -->
-    <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag">ON SITE</div>
-      <!-- 사진 넣을 때: 아래 .photo-slot 안의 안내 div를 지우고 <img src="설치사진.jpg"> 한 줄로 교체 -->
-      <div class="photo-slot">
-        <span class="ic">📷</span>
+    <!-- 06 · 풀블리드 사진 -->
+    <!-- 사진 넣기: 아래 <div class="photo-ph">…</div> 한 덩어리를
+         <img class="photo-fill" src="설치사진.jpg" alt=""> 로 교체 -->
+    <section class="card photo-card">
+      <div class="photo-ph">
+        <span style="font-size:34px;line-height:1;">📷</span>
         <span class="lbl">PHOTO HERE</span>
       </div>
-      <p class="lead sm">거울 속엔 하늘과<br><span class="hi">내가 함께 비쳤다.</span></p>
-      <p class="body">노을과 흐린 날, 반사된 하늘 앞에서 사람들이 걸음을 늦췄다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
+      <p class="photo-cap ko">거울 속엔 하늘과 <span class="hi">내가 함께 비쳤다.</span></p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">06</div>
     </section>
 
     <!-- 07 · 사이트 소개 (폰 목업) -->
     <section class="card sky-card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="tag" style="color:#0369a1;">NOW ONLINE</div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
+      <div class="tag">NOW ONLINE</div>
       <div class="phone">
         <div class="pband t">☁️☁️☁️☁️☁️☁️☁️☁️</div>
         <div class="ptitle">BECOME<br>A SKY<br>SANDWICH</div>
         <div class="pme">🥪</div>
         <div class="pband b">☁️☁️☁️☁️☁️☁️☁️☁️</div>
       </div>
-      <p class="lead sm">이젠 웹에서도<br><span style="background:linear-gradient(transparent 58%,#fff 58%);padding:0 2px;">직접 샌드위치가 된다.</span></p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="lead sm ko">이젠 웹에서도<br><span style="background:linear-gradient(transparent 58%,#fff 58%);padding:0 2px;">직접 샌드위치가 된다.</span></p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">07</div>
     </section>
 
-    <!-- 08 · 인터랙션 -->
+    <!-- 08 · 인터랙션 (작품의 실제 동작) -->
     <section class="card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="tag">TAP TO BECOME</div>
-      <p class="lead" style="margin-bottom:26px;">누를 때마다<br>한 단계씩.</p>
+      <p class="lead ko" style="margin-bottom:28px;">누를 때마다 한 단계씩.</p>
       <div class="steps">
         <span class="em">🙋‍♀️</span><span class="arr">→</span>
         <span class="em">👇</span><span class="arr">→</span>
@@ -313,21 +306,20 @@
         <span class="em">😮</span><span class="arr">→</span>
         <span class="em">🥪</span>
       </div>
-      <p class="body">멈춰서기 · 내려다보기 · 발견하기 · 놀라기 · 샌드위치 되기. 구름이 위아래로 모여 당신을 끼운다.</p>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <p class="body ko">멈춰서기, 내려다보기, 발견하기, 놀라기, 샌드위치 되기. 구름이 위아래로 모여 당신을 끼운다.</p>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <div class="num">08</div>
     </section>
 
     <!-- 09 · 마감 -->
     <section class="card footer-card">
-      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="emoji-xl">🥪</div>
+      <div class="cloud-band top">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
       <p class="lead">Look.<br><span style="background:linear-gradient(transparent 58%,var(--sky-deep) 58%);padding:0 2px;">Become a sandwich.</span></p>
-      <p class="body">프로필 링크에서 직접 해보세요 ☁️</p>
+      <p class="body ko">프로필 링크에서 직접 해보세요.</p>
       <a class="link-pill" href="https://wooeekim.github.io/skysandwich/">VIEW ONLINE →</a>
-      <div class="credit">Naeun Kim · 2026</div>
-      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
-      <div class="num" style="color:var(--ink);">09</div>
+      <div class="credit">NAEUN KIM · 2026</div>
+      <div class="cloud-band bottom">☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</div>
+      <div class="num">09</div>
     </section>
 
   </div>
