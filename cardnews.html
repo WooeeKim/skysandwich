@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sky Sandwich · 카드뉴스</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#BAE6FD;
+    --sky-deep:#7DD3FC;
+    --ink:#0b1220;
+    --gray:#475569;
+    --spring:cubic-bezier(0.34,1.7,0.4,1);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#e9eef3;
+    font-family:'Noto Sans KR',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    padding:40px 0 80px;
+  }
+  .hint{
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+    margin:0 0 28px;
+    font-family:'Press Start 2P',cursive;
+    letter-spacing:1px;
+  }
+  .deck{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:34px;
+  }
+
+  /* ── 슬라이드: 인스타 세로 4:5 (1080×1350) ── */
+  .card{
+    position:relative;
+    width:432px;          /* 1080 * 0.4 */
+    height:540px;         /* 1350 * 0.4 */
+    background:#ffffff;
+    overflow:hidden;
+    border-radius:6px;
+    box-shadow:0 18px 50px rgba(15,23,42,.16);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 38px;
+    user-select:none;
+  }
+
+  /* 구름 띠 */
+  .cloud-band{
+    position:absolute;
+    left:0;
+    width:100%;
+    height:46px;
+    background:var(--sky);
+    overflow:hidden;
+    white-space:nowrap;
+    display:flex;
+    align-items:center;
+    font-size:24px;
+    letter-spacing:2px;
+    line-height:1;
+  }
+  .cloud-band.top{top:0;}
+  .cloud-band.bottom{bottom:0;}
+  .cloud-band span{padding:0 2px;}
+
+  .pixel{font-family:'Press Start 2P',cursive;}
+  .num{
+    position:absolute;
+    bottom:14px;
+    right:18px;
+    font-family:'Press Start 2P',cursive;
+    font-size:9px;
+    color:var(--sky-deep);
+    z-index:5;
+  }
+  .tag{
+    font-family:'Press Start 2P',cursive;
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--sky-deep);
+    margin-bottom:18px;
+  }
+  .lead{
+    font-size:23px;
+    font-weight:900;
+    line-height:1.5;
+    letter-spacing:-.3px;
+  }
+  .lead .hi{
+    background:linear-gradient(transparent 58%, var(--sky) 58%);
+    padding:0 2px;
+  }
+  .body{
+    font-size:14px;
+    font-weight:400;
+    line-height:1.75;
+    color:var(--gray);
+    margin-top:18px;
+    max-width:330px;
+  }
+  .emoji-xl{font-size:96px;line-height:1;margin:6px 0;}
+  .emoji-l{font-size:62px;line-height:1;}
+
+  /* ── 1. 표지 ── */
+  .cover{background:#fff;}
+  .cover .clouds-mid{
+    position:absolute;left:0;width:100%;
+    display:flex;flex-direction:column;gap:0;
+  }
+  .cover .title{
+    font-family:'Press Start 2P',cursive;
+    font-size:23px;
+    line-height:1.5;
+    color:var(--ink);
+    margin:0;
+  }
+  .cover .sub{
+    margin-top:22px;
+    font-size:14px;
+    color:var(--gray);
+    letter-spacing:1px;
+  }
+  .sandwich-stack{
+    display:flex;flex-direction:column;align-items:center;
+    margin-bottom:26px;
+  }
+  .sandwich-stack .band-mini{
+    width:200px;height:30px;background:var(--sky);
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;overflow:hidden;border-radius:3px;
+  }
+  .sandwich-stack .me{font-size:58px;margin:-2px 0;z-index:2;line-height:1;}
+
+  /* ── 진행 스텝 카드 ── */
+  .steps{
+    display:flex;align-items:center;justify-content:center;
+    gap:10px;flex-wrap:wrap;margin-top:10px;
+  }
+  .steps .em{font-size:40px;line-height:1;}
+  .steps .arr{color:var(--sky-deep);font-size:20px;font-weight:900;}
+
+  .footer-card{background:var(--sky);}
+  .footer-card .lead{color:var(--ink);}
+  .footer-card .body{color:#1e3a4f;}
+  .footer-card .cloud-band{background:#fff;}
+  .credit{
+    font-family:'Press Start 2P',cursive;
+    font-size:11px;line-height:1.8;color:var(--ink);
+    margin-top:26px;
+  }
+  .link-pill{
+    margin-top:22px;display:inline-block;
+    font-family:'Press Start 2P',cursive;font-size:10px;
+    background:var(--ink);color:#fff;padding:11px 16px;border-radius:4px;
+    text-decoration:none;letter-spacing:1px;
+  }
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .hint{display:none;}
+    .deck{gap:0;}
+    .card{box-shadow:none;border-radius:0;page-break-after:always;}
+  }
+</style>
+</head>
+<body>
+
+  <p class="hint">SKY SANDWICH · swipe →</p>
+
+  <div class="deck">
+
+    <!-- 1 · 표지 -->
+    <section class="card cover">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="sandwich-stack">
+        <div class="band-mini">☁️☁️☁️☁️☁️☁️</div>
+        <div class="me">🙋‍♀️</div>
+        <div class="band-mini">☁️☁️☁️☁️☁️☁️</div>
+      </div>
+      <h1 class="title">Become<br>a Sky<br>Sandwich</h1>
+      <p class="sub">하늘과 하늘 사이에 끼이는 법</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">01</div>
+    </section>
+
+    <!-- 2 · 관찰 -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">OBSERVATION</div>
+      <div class="emoji-xl">☁️</div>
+      <p class="lead">하늘은 늘 위에 있지만<br><span class="hi">아무도 올려다보지 않는다.</span></p>
+      <p class="body">바쁘게 지나치는 길 위에서, 우리는 머리 위의 하늘을 거의 잊고 산다.</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">02</div>
+    </section>
+
+    <!-- 3 · 아이디어 -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">THE IDEA</div>
+      <div class="emoji-l">🪞</div>
+      <p class="lead" style="margin-top:14px;">그래서 하늘을<br><span class="hi">바닥에 비췄다.</span></p>
+      <p class="body">N25 뒤편 잘 쓰지 않던 공간에 거울 타일을 붙였다. 고개를 숙여도 하늘이 보이도록.</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">03</div>
+    </section>
+
+    <!-- 4 · 샌드위치 개념 -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">THE MOMENT</div>
+      <div class="sandwich-stack" style="margin:8px 0 22px;">
+        <div class="band-mini" style="width:170px;">☁️ 진짜 하늘 ☁️</div>
+        <div class="me">🧍</div>
+        <div class="band-mini" style="width:170px;">🪞 비친 하늘 🪞</div>
+      </div>
+      <p class="lead">위에는 진짜 하늘,<br>아래엔 비친 하늘.<br><span class="hi">그 사이의 사람은 샌드위치.</span></p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">04</div>
+    </section>
+
+    <!-- 5 · 변신 진행 -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">HOW TO BECOME</div>
+      <p class="lead" style="margin-bottom:26px;">샌드위치가 되는 법</p>
+      <div class="steps">
+        <span class="em">🙋‍♀️</span><span class="arr">→</span>
+        <span class="em">👇</span><span class="arr">→</span>
+        <span class="em">👀</span><span class="arr">→</span>
+        <span class="em">😮</span><span class="arr">→</span>
+        <span class="em">🥪</span>
+      </div>
+      <p class="body">멈춰서기 · 내려다보기 · 발견하기 · 놀라기 · 샌드위치 되기.</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">05</div>
+    </section>
+
+    <!-- 6 · 작게, 우연히 -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">QUIET ON PURPOSE</div>
+      <div class="emoji-l">🤫</div>
+      <p class="lead" style="margin-top:14px;">설명하지 않기로 했다.</p>
+      <p class="body">QR도, "인스타에 올려주세요"도 붙이지 않았다. 큰 구경거리 대신, 지나가다 우연히 마주치고 스스로 발견하는 작은 장치이고 싶었다. 타일 사이는 비워 두어 앉아 쉬는 자리도 남겼다.</p>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">06</div>
+    </section>
+
+    <!-- 7 · 기록 Before/During/After -->
+    <section class="card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="tag">WHAT HAPPENED</div>
+      <p class="lead" style="margin-bottom:20px;">그 후</p>
+      <div class="body" style="text-align:left;max-width:300px;margin-top:6px;">
+        <p style="margin:0 0 12px;"><span class="pixel" style="font-size:9px;color:var(--sky-deep);">BEFORE</span><br>아무도 멈추지 않던 길.</p>
+        <p style="margin:0 0 12px;"><span class="pixel" style="font-size:9px;color:var(--sky-deep);">DURING</span><br>설치 중에도 사람들이 다가와 물었다.</p>
+        <p style="margin:0;"><span class="pixel" style="font-size:9px;color:var(--sky-deep);">AFTER</span><br>햇빛을 반사하는 거울 앞에서 사람들이 속도를 늦췄다. 노을과 흐린 날엔 더. 거울 속엔 하늘과 자기 자신이 함께 비쳤다.</p>
+      </div>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num">07</div>
+    </section>
+
+    <!-- 8 · 마감 -->
+    <section class="card footer-card">
+      <div class="cloud-band top"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="emoji-xl">🥪</div>
+      <p class="lead">Look.<br><span style="background:linear-gradient(transparent 58%,#fff 58%);padding:0 2px;">Become a sandwich.</span></p>
+      <p class="body" style="color:#1e3a4f;">📍 Behind N25</p>
+      <div class="credit">Naeun Kim<br>2026</div>
+      <a class="link-pill" href="https://wooeekim.github.io/skysandwich/">VIEW ONLINE ☁️</a>
+      <div class="cloud-band bottom"><span>☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️☁️</span></div>
+      <div class="num" style="color:var(--ink);">08</div>
+    </section>
+
+  </div>
+</body>
+</html>
